@@ -3,6 +3,9 @@
 ## Ссылка на проект
 https://github.com/Archy-A/movies-explorer-api
 
+## Ссылка на домейн api 
+https://api.dipp.nomoredomains.work
+
 ## Директории
 
 `/routes` — папка с файлами роутера  
