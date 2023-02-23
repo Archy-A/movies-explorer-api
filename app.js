@@ -68,7 +68,7 @@ app.use('/signin', celebrate({
   }),
 }), login);
 
-app.use(auth);
+// app.use(auth);
 
 const usersRouter = require('./routes/users');
 
