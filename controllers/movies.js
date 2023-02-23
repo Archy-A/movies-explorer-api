@@ -64,8 +64,8 @@ exports.deleteMovie = async (req, res, next) => {
     if (moviedb == null) {
       next(new NotFoundError(Constants.CARD_NOT_EXIST));
     } else if (moviedb.owner.valueOf() === owner) {
-        Movie.findByIdAndRemove(req.params.movieId).then((movies) => {
-        res.send(movies);
+        Movie.findByIdAndRemove(req.params.id).then(() => {
+        res.send({message: `Фильм [ ${moviedb.nameRU} ] успешно удален!`});
       });
     } else {
       next(new OwnerError(Constants.OWNER_WRONG));
