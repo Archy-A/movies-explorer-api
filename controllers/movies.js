@@ -46,9 +46,10 @@ exports.createMovie = (req, res, next) => {
       res.send(movies);
     })
     .catch((e) => {
+      if (e.code === 11000) {
+        next(new BadRequestError(Constants.MOVIEID_EXIST));
+      }
       if (e.name === 'ValidationError') {
-        console.log('>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> tutttttt', e)
-        console.log('>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>',)
         next(new BadRequestError(Constants.HTTP_BAD_REQUEST));
       } else {
         next(e);

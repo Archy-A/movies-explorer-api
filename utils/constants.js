@@ -10,6 +10,7 @@ module.exports = Object.freeze({
     USER_ID_WRONG: 'Некорректный ID пользователя!',
     USER_NOT_FOUND: 'Пользователь не найден',
     USER_EXIST: 'Пользователь уже существует',
+    MOVIEID_EXIST: 'Поменяйте поле MOVIEID, т.к. такой ID уже существует в базе!',
     CARD_NOT_FOUND: 'Карточка не найдена',
     USER_BAD_DATA: 'Переданы некорректные данные в метод пользователя',
     SERVER_ERROR: 'Произошла ошибка на сервере',

@@ -50,11 +50,11 @@ exports.createUser = async (req, res, next) => {
 };
 
 exports.updateUser = (req, res, next) => {
-  const { name } = req.body;
+  const { name, email } = req.body;
   const me = req.user._id;
   User.findByIdAndUpdate(
     me,
-    { name },
+    { name, email },
     {
       new: true,
       runValidators: true,
@@ -64,6 +64,7 @@ exports.updateUser = (req, res, next) => {
       if (user) {
         res.send({
           name: user.name,
+          email: user.email,
           _id: user._id,
         });
       } else {
