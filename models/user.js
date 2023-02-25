@@ -7,10 +7,9 @@ const UserPassError = require('../errors/user-pass-err');
 const userSchema = new mongoose.Schema({
   name: {
     type: String,
-    required: false,
+    required: true,
     minlength: 2,
-    maxlength: 30,
-    default: 'Антон Долин',
+    maxlength: 30
   },
 
   email: {

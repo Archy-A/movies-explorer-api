@@ -25,7 +25,7 @@ exports.getMe = (req, res, next) => {
     .catch(next);
 };
 
-exports.createUser = async (req, res, next) => {
+exports.createUser = (req, res, next) => {
   bcrypt.hash(req.body.password, 10)
     .then((hash) => User.create({
       name: req.body.name,
@@ -46,7 +46,6 @@ exports.createUser = async (req, res, next) => {
         next(e);
       }
     });
-  return null;
 };
 
 exports.updateUser = (req, res, next) => {

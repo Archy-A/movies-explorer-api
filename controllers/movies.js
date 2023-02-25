@@ -13,35 +13,7 @@ exports.getMovies = (req, res, next) => {
 };
 
 exports.createMovie = (req, res, next) => {
-  const owner = req.user._id;
-  const {
-         nameRU,
-         nameEN,
-         description,
-         director,
-         country,
-         duration,
-         year,
-         image,
-         thumbnail,
-         trailerLink,
-         movieId
-        } = req.body;
-
-  Movie.create({
-                nameRU,
-                nameEN,
-                description,
-                director,
-                country,
-                duration,
-                year,
-                image,
-                thumbnail,
-                trailerLink,
-                owner,
-                movieId
-              })
+  Movie.create({ ...req.body, owner: req.user._id })
     .then((movies) => {
       res.send(movies);
     })

@@ -2,13 +2,14 @@ require('dotenv').config();
 const express = require('express');
 const mongoose = require('mongoose');
 const { errors } = require('celebrate');
-const { celebrate, Joi } = require('celebrate');
 const auth = require('./middlewares/auth');
 const errorCatcher = require('./middlewares/main-error-catcher');
 const { requestLogger, errorLogger } = require('./middlewares/logger');
+const Config = require('./utils/config');
+const validator = require('./routes/validation');
 
-const { PORT = 3000 } = process.env;
-const { MONGODBIP } = process.env;
+const { PORT = Config.PORT_DEFAULT} = process.env;
+const { MONGODBIP = Config.DEV_MODE_MONGO_DB_IP } = process.env;
 const app = express();
 
 app.use(express.json());
@@ -16,8 +17,8 @@ app.use(express.json());
 mongoose.connect(`mongodb://${MONGODBIP}`);
 
 const allowedCors = [
-  'https://testdeploy.nomoredomainsclub.ru',
-  'http://testdeploy.nomoredomainsclub.ru',
+  'https://dipp.nomoredomains.work',
+  'http://dipp.nomoredomains.work',
   'http://localhost:3000',
   'https://localhost:3000',
 ];
@@ -49,23 +50,11 @@ app.get('/crash-test', () => {
 
 const signup = require('./routes/signup');
 
-app.use('/signup', celebrate({
-  body: Joi.object().keys({
-    name: Joi.string().min(2).max(30),
-    email: Joi.string().required().email(),
-    password: Joi.string().required(),
-  }).unknown(true),
-}), signup);
+app.use('/signup', validator.validateSignUP(), signup);
 
 const login = require('./routes/login');
 
-app.use('/signin', celebrate({
-  body: Joi.object().keys({
-    name: Joi.string().min(2).max(30),
-    email: Joi.string().required().email(),
-    password: Joi.string().required(),
-  }),
-}), login);
+app.use('/signin', validator.validateSignIN(), login);
 
 app.use(auth);
 
