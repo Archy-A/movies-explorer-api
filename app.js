@@ -1,5 +1,6 @@
 require('dotenv').config();
 const express = require('express');
+const helmet = require("helmet");
 const mongoose = require('mongoose');
 const { errors } = require('celebrate');
 const auth = require('./middlewares/auth');
@@ -7,10 +8,13 @@ const errorCatcher = require('./middlewares/main-error-catcher');
 const { requestLogger, errorLogger } = require('./middlewares/logger');
 const Config = require('./utils/config');
 const validator = require('./routes/validation');
+const rateLimiter = require('./middlewares/rateLimiter');
 
 const { PORT = Config.PORT_DEFAULT} = process.env;
 const { MONGODBIP = Config.DEV_MODE_MONGO_DB_IP } = process.env;
 const app = express();
+
+app.use(helmet());
 
 app.use(express.json());
 
@@ -47,6 +51,8 @@ app.get('/crash-test', () => {
     throw new Error('Сервер сейчас упадёт');
   }, 0);
 });
+
+app.use(rateLimiter.rateLimiterUsingThirdParty);
 
 const signup = require('./routes/signup');
 
