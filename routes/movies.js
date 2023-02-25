@@ -5,11 +5,13 @@ const Constants = require('../utils/constants');
 
 router.get('/', moviesController.getMovies);
 
-router.delete('/:id', celebrate({
-  params: Joi.object().keys({
-    id: Joi.string().pattern(/^[0-9a-fA-F]{24}$/),
-  }),
-}), moviesController.deleteMovie);
+router.delete('/:id',
+// , celebrate({
+//   params: Joi.object().keys({
+//     id: Joi.string().pattern(/^[0-9a-fA-F]{24}$/),
+//   }),
+// }),
+moviesController.deleteMovie);
 
 router.post('/', celebrate({
   body: Joi.object().keys({
@@ -23,8 +25,7 @@ router.post('/', celebrate({
     year: Joi.number().integer().min(4).required(),
     thumbnail: Joi.string().required().min(2).pattern(Constants.REGEXPHTTP),
     trailerLink: Joi.string().required().min(2).pattern(Constants.REGEXPHTTP),
- //   owner: Joi.string().required().min(2).max(30),
-    movieId: Joi.string().required().min(2).max(30)
+    movieId: Joi.number().required()
   }),
 }), moviesController.createMovie);
 

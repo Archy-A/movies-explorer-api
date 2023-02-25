@@ -5,7 +5,6 @@ const { errors } = require('celebrate');
 const { celebrate, Joi } = require('celebrate');
 const auth = require('./middlewares/auth');
 const errorCatcher = require('./middlewares/main-error-catcher');
-const Constants = require('./utils/constants');
 const { requestLogger, errorLogger } = require('./middlewares/logger');
 
 const { PORT = 3000 } = process.env;

@@ -1,8 +1,8 @@
 module.exports = Object.freeze({
-    HTTP_PERMISSION_DENIED: '403',
-    HTTP_BAD_REQUEST: '400',
-    HTTP_INTERNAL_SERVER_ERROR: '500',
-    HTTP_NOT_FOUND: '404',
+    HTTP_PERMISSION_DENIED: 'Доступ запрещен! Ошибка: 403',
+    HTTP_BAD_REQUEST: 'Некорреткный запрос! Ошибка: 400',
+    HTTP_INTERNAL_SERVER_ERROR: 'Внутряння ошибка сервера! Ошибка: 500',
+    HTTP_NOT_FOUND: 'Страницв не найдена! Ошибка: 404',
     JWT_PROBLEM: 'Необходима авторизация',
     OWNER_WRONG: 'Вы не являетесь владельцем созданного поста про фильм!',
     CARD_NOT_EXIST: 'Нет такого фильма',
@@ -10,7 +10,6 @@ module.exports = Object.freeze({
     USER_ID_WRONG: 'Некорректный ID пользователя!',
     USER_NOT_FOUND: 'Пользователь не найден',
     USER_EXIST: 'Пользователь уже существует',
-    MOVIEID_EXIST: 'Поменяйте значение в поле MOVIEID, т.к. такой идентификатор уже существует в базе!',
     CARD_NOT_FOUND: 'Фильм не найден',
     USER_BAD_DATA: 'Переданы некорректные данные в метод пользователя',
     SERVER_ERROR: 'Произошла ошибка на сервере',
@@ -20,5 +19,5 @@ module.exports = Object.freeze({
     CARD_DELETE_BAD_DATA: 'переданы некорректные данные в метод удаления фильма',
     PAGE_NOT_FOUND: 'Уууупс! Нет такой страницы... Штож',
     REGEXPHTTP: /^(http(s):\/\/.)[-a-zA-Z0-9:%._+~#=]{2,256}\/[-a-zA-Z0-9:%._+~#=]{2,256}/,
+    FILM_DELETED: 'этот фильм успешно удален!'
   });
-  

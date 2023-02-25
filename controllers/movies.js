@@ -5,7 +5,7 @@ const NotFoundError = require('../errors/not-found-err');
 const BadRequestError = require('../errors/user-id-err');
 
 exports.getMovies = (req, res, next) => {
-    Movie.find({})
+    Movie.find({ owner: req.user._id } )
     .then((movies) => {
       res.send(movies);
     })
@@ -14,7 +14,7 @@ exports.getMovies = (req, res, next) => {
 
 exports.createMovie = (req, res, next) => {
   const owner = req.user._id;
-  const { 
+  const {
          nameRU,
          nameEN,
          description,
@@ -28,7 +28,7 @@ exports.createMovie = (req, res, next) => {
          movieId
         } = req.body;
 
-  Movie.create({ 
+  Movie.create({
                 nameRU,
                 nameEN,
                 description,
@@ -57,24 +57,37 @@ exports.createMovie = (req, res, next) => {
     });
 };
 
-exports.deleteMovie = async (req, res, next) => {
-  try {
-    const moviedb = await Movie.findOne({ _id: req.params.id });
+async function findMovie(id) {
+  return await Movie.findOne({ _id: id });
+}
+
+exports.deleteMovie = (req, res, next) => {
     const owner = req.user._id;
-    if (moviedb == null) {
-      next(new NotFoundError(Constants.CARD_NOT_EXIST));
-    } else if (moviedb.owner.valueOf() === owner) {
+    findMovie(req.params.id ).then((moviedb) => {
+      if (moviedb == null) {
+        next(new NotFoundError(Constants.CARD_NOT_EXIST));
+      }
+      else if (moviedb.owner.valueOf() === owner) {
         Movie.findByIdAndRemove(req.params.id).then(() => {
-        res.send({message: `Фильм [ ${moviedb.nameRU} ] успешно удален!`});
-      });
-    } else {
-      next(new OwnerError(Constants.OWNER_WRONG));
-    }
-  } catch (e) {
-    if (e.name === 'CastError') {
-      next(new BadRequestError(Constants.HTTP_BAD_REQUEST));
-    } else {
-      next(e);
-    }
-  }
+          res.send({message: `[ ${moviedb.nameRU} ] ${Constants.FILM_DELETED}`});
+        })
+        .catch((e) => {
+          if (e.name === 'CastError') {
+            next(new BadRequestError(Constants.HTTP_BAD_REQUEST));
+          } else {
+            next(e);
+          }
+        });
+      }
+      else {
+        next(new OwnerError(Constants.OWNER_WRONG));
+      }
+    })
+    .catch((e) => {
+      if (e.name === 'CastError') {
+        next(new BadRequestError(Constants.HTTP_BAD_REQUEST));
+      } else {
+        next(e);
+      }
+    });
 };
