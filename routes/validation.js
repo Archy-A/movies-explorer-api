@@ -13,8 +13,9 @@ exports.validateMoviePost = () => {
       image: Joi.string().required().pattern(Constants.REGEXPHTTP),
       year: Joi.string().required(),
       thumbnail: Joi.string().required().pattern(Constants.REGEXPHTTP),
-      trailerLink: Joi.string().required().pattern(Constants.REGEXPHTTP),
-      movieId: Joi.number().required()
+      trailerLink: Joi.string().required().pattern(Constants.REGEXPHTTP2),
+      externalId: Joi.number().required(),
+      like: Joi.boolean().allow(null, '')
     })
   });
 };
@@ -22,7 +23,8 @@ exports.validateMoviePost = () => {
 exports.validateMovieDelete = () => {
   return celebrate({
     params: Joi.object().keys({
-      id: Joi.string().pattern(/^[0-9a-fA-F]{24}$/),
+      id: Joi.string()
+      // id: Joi.string().pattern(/^[0-9a-fA-F]{24}$/),
     })
   });
 };

@@ -64,7 +64,7 @@ const movieSchema = new mongoose.Schema({
     type: String,
     required: true,
     validate: {
-      validator: (v) => Constants.REGEXPHTTP.test(v),
+      validator: (v) => Constants.REGEXPHTTP2.test(v),
       message: 'Неправильный формат ссылки',
     },
   },
@@ -75,10 +75,15 @@ const movieSchema = new mongoose.Schema({
     ref: 'user',
   },
 
-  movieId: {
+  externalId: {
     type: Number,
     required: true
   },
+
+  like: {
+    type: Boolean,
+    required: false
+  }
 
 });
 

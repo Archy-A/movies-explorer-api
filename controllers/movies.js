@@ -15,6 +15,7 @@ exports.getMovies = (req, res, next) => {
 exports.createMovie = (req, res, next) => {
   Movie.create({ ...req.body, owner: req.user._id })
     .then((movies) => {
+
       res.send(movies);
     })
     .catch((e) => {
@@ -35,13 +36,20 @@ async function findMovie(id) {
 
 exports.deleteMovie = (req, res, next) => {
     const owner = req.user._id;
-    findMovie(req.params.id ).then((moviedb) => {
+    console.log('req.params.id = ', req.params.id)
+
+    findMovie(req.params.id).then((moviedb) => {
       if (moviedb == null) {
+        console.log('moviedb = ', moviedb)
         next(new NotFoundError(Constants.CARD_NOT_EXIST));
       }
       else if (moviedb.owner.valueOf() === owner) {
-        Movie.findByIdAndRemove(req.params.id).then(() => {
-          res.send({message: `[ ${moviedb.nameRU} ] ${Constants.FILM_DELETED}`});
+        Movie.findOneAndRemove({ _id: req.params.id }).then((movie) => {
+
+        // Movie.findByIdAndRemove(req.params.movieId).then(() => {
+        // res.send({message: `[ ${moviedb.nameRU} ] ${Constants.FILM_DELETED}`});
+
+          res.send(movie)
         })
         .catch((e) => {
           if (e.name === 'CastError') {
