@@ -14,6 +14,7 @@ exports.validateMoviePost = () => {
       year: Joi.string().required(),
       thumbnail: Joi.string().required().pattern(Constants.REGEXPHTTP),
       trailerLink: Joi.string().required().pattern(Constants.REGEXPHTTP2),
+      ////// last changes
       externalId: Joi.number().required(),
       like: Joi.boolean().allow(null, '')
     })
