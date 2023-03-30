@@ -15,9 +15,18 @@ exports.getMovies = (req, res, next) => {
 exports.createMovie = (req, res, next) => {
   Movie.create({ ...req.body, owner: req.user._id })
     .then((movies) => {
+      console.log(' ==================== req ======================== ')
+      console.log(' req.body = ', req.body)
+      console.log(' ==================== res ======================== ')
+      console.log(' res = ', res)
       res.send(movies);
     })
     .catch((e) => {
+      console.log(' ==================== req ======================== ')
+      console.log(' req.body = ', req.body)
+      console.log(' ==================== res ======================== ')
+      console.log(' res = ', res)
+      console.log(' err = ', e)
       if (e.code === 11000) {
         next(new BadRequestError(Constants.MOVIEID_EXIST));
       }
