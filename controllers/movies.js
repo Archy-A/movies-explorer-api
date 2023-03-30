@@ -15,7 +15,6 @@ exports.getMovies = (req, res, next) => {
 exports.createMovie = (req, res, next) => {
   Movie.create({ ...req.body, owner: req.user._id })
     .then((movies) => {
-
       res.send(movies);
     })
     .catch((e) => {
