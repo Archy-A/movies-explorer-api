@@ -17,16 +17,12 @@ exports.createMovie = (req, res, next) => {
     .then((movies) => {
       console.log(' ==================== req ======================== ')
       console.log(' req.body = ', req.body)
-      console.log(' ==================== res ======================== ')
-      console.log(' res = ', res)
       res.send(movies);
     })
     .catch((e) => {
       console.log(' ==================== req ======================== ')
       console.log(' req.body = ', req.body)
-      console.log(' ==================== res ======================== ')
-      console.log(' res = ', res)
-      console.log(' err = ', e)
+      // console.log(' err = ', e)
       if (e.code === 11000) {
         next(new BadRequestError(Constants.MOVIEID_EXIST));
       }
